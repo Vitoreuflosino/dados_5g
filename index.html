@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DADOS5G - Análise Inteligente de Planos</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Página 1: Cadastro Inicial -->
+    <div id="page1" class="min-h-screen flex flex-col justify-center items-center p-6 fade-in">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-10">
+                <div class="flex justify-center mb-6">
+                    <div class="gradient-bg text-white p-4 rounded-2xl w-20 h-20 flex items-center justify-center">
+                        <span class="text-2xl font-bold">D5G</span>
+                    </div>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">DADOS5G</h1>
+                <p class="text-gray-600">Análise inteligente para encontrar o plano de dados ideal para você</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 card-shadow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">Cadastro Inicial</h2>
+                
+                <form id="registerForm">
+                    <div class="mb-5">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome completo *</label>
+                        <input type="text" id="name" name="name" required 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        <p class="text-red-500 text-xs mt-1 hidden" id="nameError">Por favor, informe seu nome completo</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail *</label>
+                        <input type="email" id="email" name="email" required 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        <p class="text-red-500 text-xs mt-1 hidden" id="emailError">Por favor, informe um e-mail válido</p>
+                    </div>
+                    
+                    <button type="button" id="submitRegister"
+                            class="w-full gradient-bg text-white py-3 rounded-lg font-medium hover:opacity-90 transition flex justify-center items-center">
+                        <span>Iniciar Análise</span>
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="text-center mt-8 text-gray-500 text-sm">
+                <p>Seus dados estão seguros conosco. Não compartilhamos informações pessoais.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página 2: Formulário de Dados -->
+    <div id="page2" class="min-h-screen p-6 hidden">
+        <div class="max-w-2xl mx-auto">
+            <div class="flex items-center mb-8">
+                <button id="backToRegister" class="text-blue-600 hover:text-blue-800 flex items-center mr-4">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    Voltar
+                </button>
+                <div class="flex-1 text-center">
+                    <h1 class="text-2xl font-bold text-gray-800">DADOS5G</h1>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 card-shadow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Formulário de Dados</h2>
+                <p class="text-gray-600 mb-6">Preencha as informações sobre seu uso atual para uma análise personalizada</p>
+                
+                <form id="dataForm">
+                    <div class="mb-6">
+                        <label for="currentGB" class="block text-sm font-medium text-gray-700 mb-1">Quantidade de GB utilizado no plano atual</label>
+                        <input type="number" id="currentGB" name="currentGB" min="1" max="1000" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Histórico de GB utilizados nos últimos 3 meses</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="month1" class="block text-xs text-gray-500 mb-1">Mês 1</label>
+                                <input type="number" id="month1" name="month1" min="0" max="1000" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                            <div>
+                                <label for="month2" class="block text-xs text-gray-500 mb-1">Mês 2</label>
+                                <input type="number" id="month2" name="month2" min="0" max="1000" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                            <div>
+                                <label for="month3" class="block text-xs text-gray-500 mb-1">Mês 3</label>
+                                <input type="number" id="month3" name="month3" min="0" max="1000" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="planType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de plano</label>
+                            <select id="planType" name="planType" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                <option value="">Selecione</option>
+                                <option value="individual">Individual</option>
+                                <option value="familiar">Familiar</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="carrier" class="block text-sm font-medium text-gray-700 mb-1">Operadora atual</label>
+                            <select id="carrier" name="carrier" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                <option value="">Selecione</option>
+                                <option value="claro">Claro</option>
+                                <option value="vivo">Vivo</option>
+                                <option value="tim">TIM</option>
+                                <option value="oi">Oi</option>
+                                <option value="outra">Outra</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="usageLocation" class="block text-sm font-medium text-gray-700 mb-1">Local de uso principal</label>
+                        <select id="usageLocation" name="usageLocation" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            <option value="">Selecione</option>
+                            <option value="street">Na rua</option>
+                            <option value="work">Trabalho</option>
+                            <option value="home">Casa</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <label for="needs" class="block text-sm font-medium text-gray-700 mb-1">Principal necessidade de dados móveis</label>
+                        <textarea id="needs" name="needs" rows="3" placeholder="Ex: Navegação, Streaming, Trabalho remoto, Jogos, etc." 
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
+                    </div>
+                    
+                    <button type="button" id="submitData"
+                            class="w-full gradient-bg text-white py-3 rounded-lg font-medium hover:opacity-90 transition flex justify-center items-center">
+                        <span>Gerar Análise com IA</span>
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página 3: Relatório com IA -->
+    <div id="page3" class="min-h-screen p-6 hidden">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center mb-8">
+                <button id="backToDataForm" class="text-blue-600 hover:text-blue-800 flex items-center mr-4">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    Voltar
+                </button>
+                <div class="flex-1 text-center">
+                    <h1 class="text-2xl font-bold text-gray-800">DADOS5G</h1>
+                </div>
+            </div>
+            
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Relatório de Análise Personalizada</h2>
+                <p class="text-gray-600">Baseado nos dados fornecidos, nossa IA identificou o plano ideal para você</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Coluna 1: Gráfico e Cards -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Gráfico de Consumo -->
+                    <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Seu Consumo de Dados (Últimos 3 Meses)</h3>
+                        <div class="h-64">
+                            <canvas id="consumptionChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Cards de Informações -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                            <div class="flex items-center mb-4">
+                                <div class="gradient-bg p-2 rounded-lg mr-3">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-800">Consumo Médio</h3>
+                            </div>
+                            <p class="text-2xl font-bold text-blue-600" id="avgConsumption">0 GB</p>
+                            <p class="text-sm text-gray-500 mt-1">Baseado nos últimos 3 meses</p>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                            <div class="flex items-center mb-4">
+                                <div class="gradient-bg p-2 rounded-lg mr-3">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-800">Perfil de Uso</h3>
+                            </div>
+                            <p class="text-lg font-medium text-gray-800" id="usageProfile">-</p>
+                            <p class="text-sm text-gray-500 mt-1" id="usageLocationText">-</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Coluna 2: Recomendação -->
+                <div class="space-y-8">
+                    <!-- Recomendação Principal -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-6 text-white card-shadow slide-in">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold">Plano Recomendado</h3>
+                            <span class="bg-white text-blue-600 text-xs font-semibold px-2 py-1 rounded-full">RECOMENDADO</span>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-2xl font-bold mb-1" id="recommendedPlanName">-</p>
+                            <p class="text-blue-100" id="recommendedCarrier">-</p>
+                        </div>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-blue-100">GB Incluídos:</span>
+                                <span class="font-semibold" id="recommendedGB">-</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-100">Preço Estimado:</span>
+                                <span class="font-semibold" id="recommendedPrice">-</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-100">Tipo:</span>
+                                <span class="font-semibold" id="recommendedType">-</span>
+                            </div>
+                        </div>
+                        
+                        <a href="#" id="recommendedLink" target="_blank" 
+                           class="block w-full bg-white text-blue-600 text-center py-3 rounded-lg font-semibold hover:bg-blue-50 transition">
+                            Ver Plano no Site
+                        </a>
+                    </div>
+                    
+                    <!-- Comparativo -->
+                    <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Comparativo com seu Plano Atual</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-600">GB Atuais:</span>
+                                    <span class="font-medium" id="currentPlanGB">-</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div id="currentGBBar" class="bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-600">GB Recomendados:</span>
+                                    <span class="font-medium" id="recommendedPlanGB">-</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div id="recommendedGBBar" class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                            <p class="text-sm text-blue-800" id="comparisonText">-</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Análise Detalhada -->
+                    <div class="bg-white rounded-2xl p-6 card-shadow slide-in">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Análise Detalhada</h3>
+                        <p class="text-gray-600 text-sm" id="detailedAnalysis">-</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-center">
+                <button id="newAnalysis" class="gradient-bg text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition inline-flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Nova Análise
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/api.js"></script>
+    <script src="scripts/app.js"></script>
+
+    <!-- CHATBOT DADOS5G (apenas após login) -->
+    <div id="chatbot" class="fixed bottom-5 right-5 hidden z-50">
+        <button id="chatbot-toggle"
+                class="bg-blue-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-blue-700">
+            💬
+        </button>
+
+        <div id="chatbot-window"
+            class="hidden bg-white rounded-2xl shadow-xl w-80 h-96 flex flex-col overflow-hidden mt-3">
+            <div class="bg-blue-600 text-white p-3 text-center font-semibold">Assistente DADOS5G</div>
+
+            <div id="chatbot-messages" class="flex-1 p-3 overflow-y-auto text-sm space-y-2">
+                <div class="bg-gray-100 p-2 rounded-lg text-gray-800">
+                    👋 Olá! Sou o assistente do DADOS5G.<br>
+                    Posso tirar dúvidas sobre o app, planos, consumo, IA e resultados.
+                </div>
+            </div>
+
+            <form id="chatbot-form" class="p-2 border-t flex">
+                <input id="chatbot-input" type="text" placeholder="Digite sua pergunta..."
+                    class="flex-1 p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+                <button class="ml-2 bg-blue-600 text-white px-3 rounded-lg hover:bg-blue-700">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    const chatbot = document.getElementById("chatbot");
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotMessages = document.getElementById("chatbot-messages");
+
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+    const page3 = document.getElementById("page3");
+
+    /* ====== VISIBILIDADE APÓS LOGIN ====== */
+    function updateChatbotVisibility() {
+        const onLoginPage = !page1.classList.contains("hidden");
+        if (onLoginPage) {
+            chatbot.classList.add("hidden");
+            chatbotWindow.classList.add("hidden");
+        } else {
+            chatbot.classList.remove("hidden");
+        }
+    }
+
+    // verificação periódica (a cada 400ms)
+    setInterval(updateChatbotVisibility, 400);
+
+    /* ====== ABRIR / FECHAR CHATBOT ====== */
+    chatbotToggle.addEventListener("click", () => {
+        chatbotWindow.classList.toggle("hidden");
+        if (!chatbotWindow.classList.contains("hidden")) {
+            chatbotInput.focus();
+        }
+    });
+
+    /* ====== ADICIONAR MENSAGEM ====== */
+    function addMessage(text, sender) {
+        const div = document.createElement("div");
+        div.className = sender === "user"
+            ? "bg-blue-100 p-2 rounded-lg text-right text-gray-800"
+            : "bg-gray-100 p-2 rounded-lg text-left text-gray-800";
+        div.textContent = text;
+        chatbotMessages.appendChild(div);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    /* ====== MOTOR DE RESPOSTAS INTELIGENTE ====== */
+    function getSmartResponse(input) {
+        const msg = input.toLowerCase();
+
+        if (msg.includes("oi") || msg.includes("olá") || msg.includes("ola"))
+            return "Olá 😄! Sou o assistente do DADOS5G. Como posso te ajudar hoje?";
+        if (msg.includes("como funciona") || msg.includes("explica") || msg.includes("funcionamento"))
+            return "O DADOS5G analisa seu uso de internet móvel e recomenda o melhor plano 5G, com base no seu consumo, tipo de plano e operadora.";
+        if (msg.includes("plano") && msg.includes("recomend"))
+            return "O plano recomendado aparece na tela de relatório, com nome, operadora, preço e quantidade de GB ideal para você.";
+        if (msg.includes("nova") && msg.includes("análise"))
+            return "Para iniciar uma nova análise, clique no botão 'Nova Análise' no final da tela de relatório.";
+        if (msg.includes("gráfico") || msg.includes("consumo") || msg.includes("média"))
+            return "O gráfico mostra o consumo dos últimos 3 meses e a média é calculada automaticamente pelo app.";
+        if (msg.includes("operadora") || msg.includes("claro") || msg.includes("vivo") || msg.includes("tim") || msg.includes("oi"))
+            return "Você pode selecionar sua operadora atual no formulário da página 2. A IA compara diferentes operadoras para achar o melhor plano.";
+        if (msg.includes("erro") || msg.includes("problema"))
+            return "Se algo deu errado, verifique se todos os campos estão preenchidos. Recarregar a página geralmente resolve. 😊";
+        if (msg.includes("segurança") || msg.includes("dados") || msg.includes("privacidade"))
+            return "Fique tranquilo! O DADOS5G processa tudo localmente no seu navegador, sem salvar nem enviar dados pessoais.";
+        if (msg.includes("quem criou") || msg.includes("autor") || msg.includes("desenvolvedor"))
+            return "O DADOS5G foi desenvolvido para ajudar usuários a encontrar o plano 5G mais vantajoso com uma análise inteligente e simples.";
+        if (msg.includes("ajuda") || msg.includes("tutorial") || msg.includes("guia"))
+            return "Você pode pedir ajuda sobre qualquer parte do app, como: 'como funciona o gráfico', 'onde vejo o plano recomendado', ou 'como fazer nova análise'.";
+        if (msg.includes("ver plano") || msg.includes("site"))
+            return "Na tela de relatório há um botão 'Ver Plano no Site' que leva diretamente à operadora para conferir o plano sugerido.";
+
+        return "Desculpe, não entendi 🤔. Tente perguntar sobre: 'como funciona', 'plano recomendado', 'nova análise', 'gráfico' ou 'segurança'.";
+    }
+
+    /* ====== ENVIO DE MENSAGEM ====== */
+    chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const userMsg = chatbotInput.value.trim();
+        if (!userMsg) return;
+        addMessage(userMsg, "user");
+        chatbotInput.value = "";
+        setTimeout(() => {
+            const reply = getSmartResponse(userMsg);
+            addMessage(reply, "bot");
+        }, 500);
+    });
+    </script>
+</body>
+</html>
+
